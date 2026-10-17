@@ -102,11 +102,13 @@ longer, or rewrite the points. If you beat it, open an issue and tell me how.
 
 - [x] **Stage 1:** Train an AI to land in a 2D simulator
 - [x] **Stage 2:** Change the points and see what breaks
-- [ ] **Stage 3:** My own rocket simulator with real physics: fuel that burns
-      off, a steerable engine, wind
-- [ ] **Stage 4:** Put the AI on real hardware
-- [ ] **Stage 5:** A website where you change the points and watch how the AI's
-      behavior changes
+- [ ] **Stage 3:** My own rocket with real physics: fuel that burns off, an
+      engine that tilts to steer, wind
+- [ ] **Stage 4:** AI vs a hand-written controller, the way engineers do it
+- [ ] **Stage 5:** A website: land it yourself, then watch the AI, and change
+      the rules with sliders
+- [ ] **Stage 6:** Tower catch: fly into the arms instead of landing on legs
+- [ ] **Stage 7:** Real hardware
 
 ## Files
 
