@@ -17,7 +17,7 @@ ground) and picks one move. Then it gets points:
 
 | What happens | Points |
 |---|---|
-| Lands safely on the pad | **+100** |
+| Lands and comes to rest | **+100** |
 | Crashes | **-100** |
 | Gets closer to the pad, slows down, stays level | a few points, every frame |
 | A leg touches the ground | +10 per leg |
