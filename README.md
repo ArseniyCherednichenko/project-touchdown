@@ -28,7 +28,7 @@ that earned more points. That's it. That is the whole teacher.
 
 ## What happened
 
-| Stage | Attempts | What it did |
+| Phase | Attempts | What it did |
 |---|---|---|
 | Before training | 0 | Falls out of the sky |
 | Crashing | ~1,000 | Tries to land, mostly crashes |
