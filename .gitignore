@@ -5,3 +5,4 @@ logs/
 videos/
 models/
 .DS_Store
+*.log

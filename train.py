@@ -6,6 +6,7 @@ Run:  python train.py            (full run, about 1M steps)
 import argparse
 
 from stable_baselines3 import PPO
+from stable_baselines3.common.callbacks import CheckpointCallback
 from stable_baselines3.common.env_util import make_vec_env
 from stable_baselines3.common.evaluation import evaluate_policy
 
@@ -14,7 +15,13 @@ parser.add_argument("--steps", type=int, default=1_000_000)
 args = parser.parse_args()
 
 # 16 copies of the simulator run side by side, so it learns 16x faster.
-env = make_vec_env("LunarLander-v3", n_envs=16)
+# monitor_dir: every finished episode (score, length, time) goes to logs/.
+env = make_vec_env("LunarLander-v3", n_envs=16, monitor_dir="logs/")
+
+# Save a snapshot of the AI every ~100k steps, to show how it learned.
+checkpoints = CheckpointCallback(
+    save_freq=100_000 // 16, save_path="models/checkpoints", name_prefix="lander"
+)
 
 # PPO: the algorithm. "MlpPolicy": a small neural network.
 # It reads 8 numbers (position, speed, tilt, leg contact)
@@ -32,7 +39,7 @@ model = PPO(
     verbose=1,
 )
 
-model.learn(total_timesteps=args.steps)
+model.learn(total_timesteps=args.steps, callback=checkpoints)
 model.save("models/lander_ppo")
 
 # Score: above 200 counts as solved.
