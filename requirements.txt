@@ -1,0 +1,4 @@
+gymnasium[box2d]==1.1.1
+stable-baselines3==2.7.1
+imageio
+imageio-ffmpeg

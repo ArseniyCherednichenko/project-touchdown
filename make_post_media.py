@@ -4,6 +4,7 @@ Needs: python train.py run first (writes logs/ and models/checkpoints/).
 Run:   python make_post_media.py
 Writes to videos/:
   progress.mp4   1080x1920 (9:16): the same AI at 4 points in training
+and docs/touchdown.gif, a small landscape version for the README.
 """
 import glob
 import os
@@ -20,10 +21,17 @@ from stable_baselines3.common.env_util import make_vec_env
 W, H, SIM_H = 1080, 1920, 720
 TOP = (H - SIM_H) // 2  # simulator sits in the middle, clear of app buttons
 FPS, SPEED = 50, 2  # play at 2x so hovering doesn't take forever
-HELV = "/System/Library/Fonts/HelveticaNeue.ttc"
-BIG = ImageFont.truetype(HELV, 64, index=1)  # bold
-MID = ImageFont.truetype(HELV, 38)
-SMALL = ImageFont.truetype(HELV, 30)
+HELV = "/System/Library/Fonts/HelveticaNeue.ttc"  # macOS; other systems fall back
+
+
+def font(size, bold=False):
+    try:
+        return ImageFont.truetype(HELV, size, index=1 if bold else 0)
+    except OSError:
+        return ImageFont.load_default(size)
+
+
+BIG, MID, SMALL = font(64, bold=True), font(38), font(30)
 GREY, WHITE = (150, 150, 150), (255, 255, 255)
 os.makedirs("videos", exist_ok=True)
 
@@ -76,6 +84,14 @@ def typical(model):
     return eps[4]
 
 
+def gif_frame(frame, title, sub):
+    img = Image.fromarray(frame).resize((480, 320), Image.LANCZOS)
+    d = ImageDraw.Draw(img)
+    d.text((16, 12), title, font=font(24, bold=True), fill=WHITE)
+    d.text((16, 42), sub, font=font(16), fill=GREY)
+    return np.array(img)
+
+
 def card(frame, title, sub, score, progress):
     img = Image.new("RGB", (W, H), (0, 0, 0))
     d = ImageDraw.Draw(img)
@@ -112,6 +128,7 @@ stages = [
 
 total_steps = stages[-1][2]
 frames_out = []
+gif = []
 for title, path, steps in stages:
     frames, score = typical(load(path))
     sub = f"after {attempts_at(steps):,} attempts" if steps else "0 attempts"
@@ -119,7 +136,13 @@ for title, path, steps in stages:
     shown = frames[::SPEED]
     frames_out += [card(f, title, sub, None, p) for f in shown]
     frames_out += [card(shown[-1], title, sub, score, p)] * int(FPS * 1.2)
+    gif += [gif_frame(f, title, f"{sub}  |  score {score:.0f}") for f in frames[::4]]
+    gif += [gif[-1]] * 12
     print(f"{title}: {sub}, score {score:.0f}, {len(frames)} frames")
 
 imageio.mimsave("videos/progress.mp4", frames_out, fps=FPS, macro_block_size=8)
 print(f"videos/progress.mp4: {len(frames_out) / FPS:.1f}s")
+
+os.makedirs("docs", exist_ok=True)
+imageio.mimsave("docs/touchdown.gif", gif, duration=1000 / 25, loop=0)
+print("docs/touchdown.gif")

@@ -16,7 +16,10 @@ from PIL import Image, ImageDraw, ImageFont
 from stable_baselines3 import PPO
 
 FPS = 50  # Lunar Lander runs at 50 frames per second
-FONT = ImageFont.truetype("/System/Library/Fonts/HelveticaNeue.ttc", 26)
+try:
+    FONT = ImageFont.truetype("/System/Library/Fonts/HelveticaNeue.ttc", 26)
+except OSError:  # not on a Mac
+    FONT = ImageFont.load_default(26)
 os.makedirs("videos", exist_ok=True)
 
 model = PPO.load("models/lander_ppo")
