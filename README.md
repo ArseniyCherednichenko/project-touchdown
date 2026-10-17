@@ -41,7 +41,7 @@ The hovering phase is my favorite part. The AI did exactly what the points
 told it to, not what I meant. Designing those points is called **reward
 shaping**, and it is one of the hardest problems in training robots.
 
-## Week 2: what if I change the points?
+## Stage 2: what if I change the points?
 
 Same AI, same training, five different sets of points. Then every AI is
 tested on the original rules, 50 flights each.
@@ -115,9 +115,9 @@ longer, or rewrite the points. If you beat it, open an issue and tell me how.
 | `train.py` | Trains the AI and saves snapshots along the way |
 | `watch.py` | Opens a window and shows it landing |
 | `make_post_media.py` | Renders the GIF above and a phone video from a training run |
-| `rewards.py` | Every point value as a setting, plus the week 2 variants |
+| `rewards.py` | Every point value as a setting, plus the stage 2 variants |
 | `train_variants.py` | Trains and compares the variants |
-| `make_variant_video.py` | Renders the week 2 video |
+| `make_variant_video.py` | Renders the stage 2 video |
 | `make_videos.py` | Renders random vs trained side by side |
 | `models/lander_ppo.zip` | My trained AI |
 

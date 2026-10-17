@@ -1,4 +1,4 @@
-"""Week 1: train an AI to land Lunar Lander.
+"""Stage 1: train an AI to land Lunar Lander.
 
 Run:  python train.py            (full run, about 1M steps)
       python train.py --steps 50000   (quick test)

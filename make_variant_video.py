@@ -1,4 +1,4 @@
-"""Week 2 video: one clip per set of points, 9:16 for phones.
+"""Stage 2 video: one clip per set of points, 9:16 for phones.
 
 Needs: python train_variants.py <variant> for each variant first.
 Run:   python make_variant_video.py   ->  videos/variants.mp4
@@ -28,7 +28,7 @@ BIG, MID, SMALL = font(64, bold=True), font(38), font(30)
 
 # (variant, title, the rule change in plain words)
 CLIPS = [
-    ("default", "Normal rules", "the points from week 1"),
+    ("default", "Normal rules", "the points from stage 1"),
     ("free_fuel", "Fuel is free", "no cost for firing the engine"),
     ("expensive_fuel", "Fuel is 10x expensive", "every engine burn hurts"),
     ("no_crash_penalty", "Crashing is free", "no -100 for a crash"),
@@ -60,7 +60,7 @@ def typical(variant):
 def card(frame, title, rule, result):
     img = Image.new("RGB", (W, H), (0, 0, 0))
     d = ImageDraw.Draw(img)
-    d.text((60, TOP - 230), "PROJECT TOUCHDOWN  |  WEEK 2", font=SMALL, fill=GREY)
+    d.text((60, TOP - 230), "PROJECT TOUCHDOWN  |  STAGE 2", font=SMALL, fill=GREY)
     d.text((60, TOP - 180), title, font=BIG, fill=WHITE)
     d.text((60, TOP - 95), rule, font=MID, fill=GREY)
     img.paste(Image.fromarray(frame).resize((W, SIM_H), Image.LANCZOS), (0, TOP))

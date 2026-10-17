@@ -1,4 +1,4 @@
-"""Week 2: train one AI per set of points, then compare them on the same test.
+"""Stage 2: train one AI per set of points, then compare them on the same test.
 
 Run one:   python train_variants.py free_fuel
 Run all:   python train_variants.py all     (one after another, slow)

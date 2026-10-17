@@ -1,4 +1,4 @@
-"""Week 2: rewrite the points and see what the AI does with them.
+"""Stage 2: rewrite the points and see what the AI does with them.
 
 Lunar Lander's built-in points, taken from its source code:
   every frame:  change in (-100 * distance to pad
