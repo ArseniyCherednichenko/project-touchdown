@@ -100,12 +100,12 @@ longer, or rewrite the points. If you beat it, open an issue and tell me how.
 
 ## Roadmap
 
-- [x] **Step 1:** Train an AI to land in a 2D simulator
-- [x] **Step 2:** Change the points and see what breaks
-- [ ] **Step 3:** My own rocket simulator with real physics: fuel that burns
+- [x] **Stage 1:** Train an AI to land in a 2D simulator
+- [x] **Stage 2:** Change the points and see what breaks
+- [ ] **Stage 3:** My own rocket simulator with real physics: fuel that burns
       off, a steerable engine, wind
-- [ ] **Step 4:** Put the AI on real hardware
-- [ ] **Step 5:** A website where you change the points and watch how the AI's
+- [ ] **Stage 4:** Put the AI on real hardware
+- [ ] **Stage 5:** A website where you change the points and watch how the AI's
       behavior changes
 
 ## Files
