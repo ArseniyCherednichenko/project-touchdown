@@ -3,8 +3,7 @@
 Needs: python train.py run first (writes logs/ and models/checkpoints/).
 Run:   python make_post_media.py
 Writes to videos/:
-  progress.mp4   1080x1350: the same AI at 4 points in training
-  curve.png      1080x1350: average score over training
+  progress.mp4   1080x1920 (9:16): the same AI at 4 points in training
 """
 import glob
 import os
@@ -12,17 +11,14 @@ import re
 
 import gymnasium as gym
 import imageio
-import matplotlib
-
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from PIL import Image, ImageDraw, ImageFont
 from stable_baselines3 import PPO
 from stable_baselines3.common.env_util import make_vec_env
 
-W, H, SIM_H = 1080, 1350, 720
+W, H, SIM_H = 1080, 1920, 720
+TOP = (H - SIM_H) // 2  # simulator sits in the middle, clear of app buttons
 FPS, SPEED = 50, 2  # play at 2x so hovering doesn't take forever
 HELV = "/System/Library/Fonts/HelveticaNeue.ttc"
 BIG = ImageFont.truetype(HELV, 64, index=1)  # bold
@@ -83,13 +79,13 @@ def typical(model):
 def card(frame, title, sub, score, progress):
     img = Image.new("RGB", (W, H), (0, 0, 0))
     d = ImageDraw.Draw(img)
-    d.text((60, 70), "PROJECT TOUCHDOWN", font=SMALL, fill=GREY)
-    d.text((60, 120), title, font=BIG, fill=WHITE)
-    d.text((60, 205), sub, font=MID, fill=GREY)
+    d.text((60, TOP - 230), "PROJECT TOUCHDOWN", font=SMALL, fill=GREY)
+    d.text((60, TOP - 180), title, font=BIG, fill=WHITE)
+    d.text((60, TOP - 95), sub, font=MID, fill=GREY)
     sim = Image.fromarray(frame).resize((W, SIM_H), Image.LANCZOS)
-    img.paste(sim, (0, 300))
+    img.paste(sim, (0, TOP))
     # training progress bar
-    y = 300 + SIM_H + 90
+    y = TOP + SIM_H + 90
     d.text((60, y), "Training progress", font=SMALL, fill=GREY)
     d.rounded_rectangle((60, y + 50, W - 60, y + 62), 6, fill=(60, 60, 60))
     d.rounded_rectangle((60, y + 50, 60 + max(12, (W - 120) * progress), y + 62),
@@ -127,41 +123,3 @@ for title, path, steps in stages:
 
 imageio.mimsave("videos/progress.mp4", frames_out, fps=FPS, macro_block_size=8)
 print(f"videos/progress.mp4: {len(frames_out) / FPS:.1f}s")
-
-# --- Chart: one series, score over attempts --------------------------------
-INK, INK2, SURFACE, SERIES = "#0b0b0b", "#52514e", "#fcfcfb", "#2a78d6"
-fig, ax = plt.subplots(figsize=(10.8, 13.5), dpi=100)
-fig.patch.set_facecolor(SURFACE)
-ax.set_facecolor(SURFACE)
-fig.subplots_adjust(left=0.13, right=0.94, top=0.80, bottom=0.10)
-
-# Shade where most attempts ran out of time instead of landing or crashing.
-log["timeouts"] = (log["l"] >= 1000).rolling(100, min_periods=20).mean()
-hov = log[log["timeouts"] > 0.5]
-if len(hov):
-    ax.axvspan(hov["attempt"].min(), hov["attempt"].max(), color="#e8e7e3", lw=0)
-    ax.text((hov["attempt"].min() + hov["attempt"].max()) / 2, -230,
-            "mostly hovering\nuntil time ran out", ha="center", va="bottom",
-            fontsize=20, color=INK2)
-ax.axhline(200, color=INK2, lw=1, ls=(0, (4, 4)))
-ax.text(log["attempt"].max(), 210, "solved", ha="right", va="bottom",
-        fontsize=20, color=INK2)
-ax.plot(log["attempt"], log["score"], color=SERIES, lw=3)
-
-for side in ("top", "right"):
-    ax.spines[side].set_visible(False)
-for side in ("left", "bottom"):
-    ax.spines[side].set_color("#c9c8c3")
-ax.tick_params(colors=INK2, labelsize=18, length=0, pad=8)
-ax.grid(axis="y", color="#e8e7e3", lw=1)
-ax.set_axisbelow(True)
-ax.set_xlabel("Landing attempts", fontsize=20, color=INK2, labelpad=12)
-ax.set_ylabel("Average score", fontsize=20, color=INK2, labelpad=12)
-ax.set_ylim(-250, 300)
-ax.set_xlim(0, log["attempt"].max())
-fig.text(0.13, 0.91, "An AI learning to land a rocket", fontsize=34,
-         color=INK, weight="bold")
-fig.text(0.13, 0.86, "Average of the last 100 attempts. Project Touchdown, week 1.",
-         fontsize=20, color=INK2)
-fig.savefig("videos/curve.png", facecolor=SURFACE)
-print("videos/curve.png")
