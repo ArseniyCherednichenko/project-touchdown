@@ -41,6 +41,31 @@ The hovering phase is my favorite part. The AI did exactly what the points
 told it to, not what I meant. Designing those points is called **reward
 shaping**, and it is one of the hardest problems in training robots.
 
+## Week 2: what if I change the points?
+
+Same AI, same training, five different sets of points. Then every AI is
+tested on the original rules, 50 flights each.
+
+| Rules | Score | Lands on pad | Crashes | Engine time |
+|---|---|---|---|---|
+| Normal | 265 | 100% | 0% | 3.2 s |
+| Fuel is free | 217 | 100% | 0% | 5.9 s |
+| Fuel is 10x expensive | -32 | 0% | 100% | 0.5 s |
+| Crashing is free | 277 | 98% | 2% | 2.2 s |
+| No hints, only +100 / -100 at the end | -371 | 0% | 100% | 2.8 s |
+
+- **Free fuel:** still lands, but burns almost twice as much.
+- **Expensive fuel:** so scared of the engine that it barely brakes and
+  crashes every time.
+- **Crashing is free:** still lands. Crashing ends the flight before the
+  +100 for landing, so it avoids crashing anyway.
+- **No hints:** never learns. Landing by pure luck is too rare to learn from.
+  The small points along the way are what make learning possible.
+
+One training run per variant, so treat the exact numbers as rough. Run it
+yourself: `python train_variants.py free_fuel`, then
+`python train_variants.py compare`.
+
 ## Try it yourself
 
 Python 3.9 or newer.
@@ -76,10 +101,11 @@ longer, or rewrite the points. If you beat it, open an issue and tell me how.
 ## Roadmap
 
 - [x] **Step 1:** Train an AI to land in a 2D simulator
-- [ ] **Step 2:** My own rocket simulator with real physics: fuel that burns
+- [x] **Step 2:** Change the points and see what breaks
+- [ ] **Step 3:** My own rocket simulator with real physics: fuel that burns
       off, a steerable engine, wind
-- [ ] **Step 3:** Put the AI on real hardware
-- [ ] **Step 4:** A website where you change the points and watch how the AI's
+- [ ] **Step 4:** Put the AI on real hardware
+- [ ] **Step 5:** A website where you change the points and watch how the AI's
       behavior changes
 
 ## Files
@@ -89,6 +115,9 @@ longer, or rewrite the points. If you beat it, open an issue and tell me how.
 | `train.py` | Trains the AI and saves snapshots along the way |
 | `watch.py` | Opens a window and shows it landing |
 | `make_post_media.py` | Renders the GIF above and a phone video from a training run |
+| `rewards.py` | Every point value as a setting, plus the week 2 variants |
+| `train_variants.py` | Trains and compares the variants |
+| `make_variant_video.py` | Renders the week 2 video |
 | `make_videos.py` | Renders random vs trained side by side |
 | `models/lander_ppo.zip` | My trained AI |
 
