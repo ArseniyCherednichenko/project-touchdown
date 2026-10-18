@@ -1,4 +1,4 @@
-"""Make clips for posts: random vs trained AI, no screen recording needed.
+"""Make clips: random vs trained AI, no screen recording needed.
 
 Run:  python make_videos.py
 Writes to videos/:

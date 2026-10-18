@@ -1,4 +1,4 @@
-"""Phone-format media for posts, from a real training run.
+"""Phone-format video of a real training run, plus the README GIF.
 
 Needs: python train.py run first (writes logs/ and models/checkpoints/).
 Run:   python make_post_media.py
