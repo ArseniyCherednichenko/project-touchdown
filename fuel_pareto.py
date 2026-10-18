@@ -25,15 +25,16 @@ INK, INK2, SURFACE, LINE, BAND = "#14171c", "#6b7280", "#ffffff", "#2a78d6", "#e
 fig, (top, bottom) = plt.subplots(2, 1, figsize=(10.8, 13.5), dpi=100, sharex=True,
                                   gridspec_kw=dict(hspace=0.25))
 fig.patch.set_facecolor(SURFACE)
-fig.subplots_adjust(left=0.1, right=0.94, top=0.78, bottom=0.11)
+fig.subplots_adjust(left=0.13, right=0.94, top=0.78, bottom=0.11)
 
 for ax, ys, fmt in [(top, lands, "{:.0f}%"), (bottom, engine, "{:.1f} s")]:
     ax.set_facecolor(SURFACE)
     for s in ("top", "right", "left"):
         ax.spines[s].set_visible(False)
     ax.spines["bottom"].set_color("#d6d8dc")
-    ax.set_yticks([])
-    ax.tick_params(axis="x", colors=INK2, labelsize=17, length=0, pad=10)
+    ax.tick_params(colors=INK2, labelsize=16, length=0, pad=10)
+    ax.grid(axis="y", color="#eef0f2", lw=1)
+    ax.set_axisbelow(True)
     ax.axvspan(-0.4, sweet + 0.4, color=BAND, lw=0, zorder=0)
     ax.plot(xs, ys, color=LINE, lw=3.5, zorder=2)
     ax.scatter(xs, ys, s=90, color=LINE, edgecolor=SURFACE, linewidth=2.5, zorder=3)
@@ -43,7 +44,11 @@ for ax, ys, fmt in [(top, lands, "{:.0f}%"), (bottom, engine, "{:.1f} s")]:
     ax.set_xlim(-0.5, len(xs) - 0.5)
 
 top.set_ylim(-8, 118)
+top.set_yticks([0, 25, 50, 75, 100])
+top.set_yticklabels(["0%", "25%", "50%", "75%", "100%"])
 bottom.set_ylim(0, 4.6)
+bottom.set_yticks([0, 1, 2, 3, 4])
+bottom.set_yticklabels(["0 s", "1 s", "2 s", "3 s", "4 s"])
 top.set_title("Lands on the pad", loc="left", fontsize=19, color=INK2, pad=14)
 bottom.set_title("Engine time per landing", loc="left", fontsize=19, color=INK2, pad=14)
 top.text(sweet / 2, 55, "safe zone", ha="center", fontsize=16, color="#2f6b45")
