@@ -51,6 +51,25 @@ The hovering phase is my favorite part. The AI did exactly what the points
 told it to, not what I meant. Designing those points is called **reward
 shaping**, and it is one of the hardest problems in training robots.
 
+### What I learned
+
+I thought the AI would slowly get better at landing. It didn't. First it
+crashed for about 1,700 attempts. Then it found a loophole: if you never land,
+you can never crash. So it hovered above the pad until time ran out, for about
+900 attempts. I watched it happen live: the flight length jumped to almost
+1,000 frames, the time limit, and then suddenly dropped when it figured out
+that landing pays more than hovering.
+
+The AI never sees the picture. It only gets 8 numbers: where it is, how fast
+it moves, how tilted it is and whether its legs touch the ground. That is
+enough. Real rockets work the same way: their sensors give numbers, not video.
+
+What surprised me most is how much is luck. I trained the exact same code
+twice. The first AI landed 19 out of 20 times, the second 20 out of 20. One
+training run proves very little. I also noticed my random pilot always drifted
+to the right. It wasn't chance: the simulator started with the same random push
+every time. Small things like that can fool you if you don't check.
+
 ## Stage 2: what if I change the points?
 
 Same AI, same training, five different sets of points. Then every AI is
@@ -72,6 +91,35 @@ tested on the original rules, 50 flights each.
   +100 for landing, so it avoids crashing anyway.
 - **No hints:** never learns. Landing by pure luck is too rare to learn from.
   The small points along the way are what make learning possible.
+
+### The cheapest reliable landing
+
+![Fuel price vs landing reliability, with 95% confidence ranges](docs/fuel_reliability.png)
+
+I trained 3 AIs per fuel price and tested each on 50 flights. The bar is the
+95% confidence range: test again and the true landing rate would most likely
+fall inside it. Up to 2x the normal fuel price, even the low end of that range
+stays above a 95% requirement. Script: `fuel_reliability.py`.
+
+### What I learned
+
+The AI doesn't do what you want. It does exactly what you reward. When I made
+fuel 10x more expensive, it stopped firing its engine. But a rocket has no
+brakes: the engine is the only way to slow down. So it fell almost freely and
+crashed every single time. From its point of view, that was the smart move.
+
+Most of my guesses were wrong. I thought free crashing would make it reckless.
+It still landed, because a crash ends the flight before the landing bonus can
+come. I thought it would quickly learn from just a final reward with no hints.
+It never learned anything: it almost never lands by luck, so it never sees the
+reward in the first place.
+
+Then I wanted to know the cheapest fuel price that still lands reliably. With
+three training runs per price, up to 2x the normal price it still landed every
+time and used about a third less engine. Past that it barely saved more fuel,
+but it started missing. Near the limit the runs disagreed with each other: one
+landed 74% of the time, another 98%, with the same settings. That is why
+engineers don't design right at the edge. They keep a margin.
 
 One training run per variant, so treat the exact numbers as rough. Run it
 yourself: `python train_variants.py free_fuel`, then
@@ -131,6 +179,8 @@ longer, or rewrite the points. If you beat it, open an issue and tell me how.
 | `rewards.py` | Every point value as a setting, plus the stage 2 variants |
 | `train_variants.py` | Trains and compares the variants |
 | `make_variant_video.py` | Renders the stage 2 video |
+| `sweep_fuel.py`, `fuel_chart.py`, `fuel_reliability.py` | Fuel price check: train, test, chart |
+| `hud.py` | Telemetry panel: what the AI sees and decides while it flies |
 | `make_videos.py` | Renders random vs trained side by side |
 | `notebooks/stage1_land_a_rocket.ipynb` | Stage 1 step by step, runs in Colab |
 | `notebooks/stage2_change_the_points.ipynb` | Stage 2: five sets of points, then your own |
