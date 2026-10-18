@@ -62,6 +62,9 @@ tested on the original rules, 50 flights each.
 - **No hints:** never learns. Landing by pure luck is too rare to learn from.
   The small points along the way are what make learning possible.
 
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ArseniyCherednichenko/project-touchdown/blob/main/notebooks/stage2_change_the_points.ipynb)
+**Try it in the browser:** watch all five AIs, then design your own points.
+
 One training run per variant, so treat the exact numbers as rough. Run it
 yourself: `python train_variants.py free_fuel`, then
 `python train_variants.py compare`.
@@ -126,6 +129,8 @@ longer, or rewrite the points. If you beat it, open an issue and tell me how.
 | `make_variant_video.py` | Renders the stage 2 video |
 | `make_videos.py` | Renders random vs trained side by side |
 | `notebooks/stage1_land_a_rocket.ipynb` | Stage 1 step by step, runs in Colab |
+| `notebooks/stage2_change_the_points.ipynb` | Stage 2: five sets of points, then your own |
+| `models/variants/` | The five stage 2 AIs |
 | `models/lander_ppo.zip` | My trained AI |
 
 Built with [Gymnasium](https://gymnasium.farama.org/) (Lunar Lander) and

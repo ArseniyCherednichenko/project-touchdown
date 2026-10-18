@@ -9,3 +9,4 @@ videos/
 # Ship only the finished AI, not the training snapshots.
 models/*
 !models/lander_ppo.zip
+!models/variants/
