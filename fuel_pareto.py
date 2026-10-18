@@ -55,7 +55,7 @@ ax.set_ylim(-5, 106)
 ax.set_xlabel("Engine time per landing (s): less is cheaper", fontsize=18, color=INK2, labelpad=12)
 ax.set_ylabel("Lands on the pad (%)", fontsize=18, color=INK2, labelpad=10)
 
-ax.text(0.35, 64, "2x is the sweet spot: all 3 runs\nland every time, with about a third\nless engine than normal.\n\nGoing cheaper than 2x barely saves\nmore fuel, but it starts crashing.",
+ax.text(0.35, 72, "2x is the sweet spot: all 3 runs\nland every time, with about a third\nless engine than normal.\n\nGoing cheaper than 2x barely saves\nmore fuel, but it starts crashing.",
         fontsize=17, color=INK, va="top")
 
 fig.text(0.12, 0.92, "Less fuel or a safe landing?", fontsize=32, color=INK, weight="bold")
