@@ -68,6 +68,10 @@ yourself: `python train_variants.py free_fuel`, then
 
 ## Try it yourself
 
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ArseniyCherednichenko/project-touchdown/blob/main/notebooks/stage1_land_a_rocket.ipynb)
+**No install needed:** train your own rocket AI in the browser with the
+stage 1 notebook. Free, runs on Google Colab.
+
 Python 3.9 or newer.
 
 ```bash
@@ -121,6 +125,7 @@ longer, or rewrite the points. If you beat it, open an issue and tell me how.
 | `train_variants.py` | Trains and compares the variants |
 | `make_variant_video.py` | Renders the stage 2 video |
 | `make_videos.py` | Renders random vs trained side by side |
+| `notebooks/stage1_land_a_rocket.ipynb` | Stage 1 step by step, runs in Colab |
 | `models/lander_ppo.zip` | My trained AI |
 
 Built with [Gymnasium](https://gymnasium.farama.org/) (Lunar Lander) and
