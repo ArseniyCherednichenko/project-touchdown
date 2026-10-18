@@ -47,7 +47,8 @@ PASS, FAIL = "#2a78d6", "#a8a7a1"
 fig, ax = plt.subplots(figsize=(10.8, 13.5), dpi=100)
 fig.patch.set_facecolor(SURFACE)
 ax.set_facecolor(SURFACE)
-fig.subplots_adjust(left=0.2, right=0.8, top=0.78, bottom=0.1)
+fig.subplots_adjust(left=0.17, right=0.66, top=0.78, bottom=0.1)
+fuel_ax = fig.add_axes([0.72, 0.1, 0.22, 0.68], sharey=ax)  # engine time, same rows
 for side in ("top", "right", "left"):
     ax.spines[side].set_visible(False)
 ax.spines["bottom"].set_color("#c9c8c3")
@@ -66,14 +67,19 @@ for y, s in zip(ys, stats):
         name = "1x normal"
     ax.text(-3, y, name, ha="right", va="center", fontsize=18,
             color=INK if s["passes"] else INK2, weight="bold" if s["price"] == 0.6 else "normal")
-    ax.text(106, y, f"{s['engine']:.1f} s", ha="left", va="center", fontsize=17, color=INK2)
-    ax.text(106, y - 0.32, f"{s['n']} flights", ha="left", va="center", fontsize=12, color=INK2)
+    fuel_ax.barh(y, s["engine"], height=0.42, color=color, alpha=0.9)
+    fuel_ax.text(s["engine"] + 0.12, y, f"{s['engine']:.1f} s", ha="left", va="center",
+              fontsize=15, color=INK2)
+    ax.text(-3, y - 0.34, f"{s['n']} flights", ha="right", va="center", fontsize=11, color=INK2)
 
 ax.axvline(REQUIREMENT, color=INK, lw=1.2, ls=(0, (5, 4)), zorder=1)
-ax.text(REQUIREMENT, len(stats) - 0.35, f"requirement\n{REQUIREMENT}%", ha="center",
+ax.text(REQUIREMENT, len(stats) - 0.35, f"example\nrequirement {REQUIREMENT}%", ha="center",
         va="bottom", fontsize=15, color=INK)
 ax.text(-3, len(stats) - 0.35, "Fuel price", ha="right", va="bottom", fontsize=15, color=INK2)
-ax.text(106, len(stats) - 0.35, "Engine\ntime", ha="left", va="bottom", fontsize=15, color=INK2)
+fuel_ax.text(0, len(stats) - 0.35, "Engine time per\nlanding: less is better", ha="left",
+          va="bottom", fontsize=15, color=INK2)
+fuel_ax.set_xlim(0, 5.2)
+fuel_ax.axis("off")
 
 ax.set_xlim(0, 104)
 ax.set_ylim(-0.8, len(stats) + 0.6)
@@ -82,7 +88,7 @@ ax.set_xticks([0, 25, 50, 75, 100])
 ax.set_xticklabels(["0%", "25%", "50%", "75%", "100%"])
 ax.set_xlabel("Lands on the pad", fontsize=18, color=INK2, labelpad=12)
 
-fig.text(0.06, 0.93, "Which fuel prices land reliably?", fontsize=31, color=INK, weight="bold")
+fig.text(0.06, 0.93, "How cheap can a reliable landing get?", fontsize=31, color=INK, weight="bold")
 fig.text(0.06, 0.895, "Dot: share of test flights that landed. Bar: 95% confidence range.",
          fontsize=16, color=INK2)
 fig.text(0.06, 0.87, "Blue: even the low end of the range meets the requirement.",

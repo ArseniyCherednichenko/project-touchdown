@@ -99,7 +99,7 @@ tested on the original rules, 50 flights each.
 I trained 3 AIs per fuel price and tested each on 50 flights. The bar is the
 95% confidence range: test again and the true landing rate would most likely
 fall inside it. Up to 2x the normal fuel price, even the low end of that range
-stays above a 95% requirement. Script: `fuel_reliability.py`.
+stays above an example requirement of 95%. Script: `fuel_reliability.py`.
 
 ### What I learned
 
