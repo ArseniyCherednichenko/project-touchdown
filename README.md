@@ -101,12 +101,11 @@ I trained 3 AIs per fuel price and tested each on 50 flights. The bar is the
 fall inside it. Up to 2x the normal fuel price, even the low end of that range
 stays above an example requirement of 95%. Script: `fuel_reliability.py`.
 
-![Pareto front: engine time per landing vs landing rate](docs/fuel_pareto.png)
+![Raising the fuel price: landing rate and engine time](docs/fuel_pareto.png)
 
-The same results as a trade-off chart: cost on the x-axis, performance on the
-y-axis. The blue line is the Pareto front, the best landing rate you can get
-for each amount of fuel. The normal price sits off the front: 2x lands just as
-often with less fuel. Script: `fuel_pareto.py`.
+Raise the fuel price and the AI fires its engine less. Up to 2x the normal
+price that is free: it still lands every time. Past that, it starts crashing.
+Script: `fuel_pareto.py`.
 
 ### What I learned
 
