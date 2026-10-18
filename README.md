@@ -9,6 +9,16 @@ no idea how you get a machine to do that, so I started building it myself.
 
 Nobody tells this AI how to fly. It figures it out by trial and error.
 
+## Try it in your browser
+
+No install, free, runs on Google Colab. Each stage is a notebook you can run
+step by step.
+
+| Stage | What you do | |
+|---|---|---|
+| 1. Land a rocket | Train an AI from zero and watch it learn | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ArseniyCherednichenko/project-touchdown/blob/main/notebooks/stage1_land_a_rocket.ipynb) |
+| 2. Change the points | Watch five AIs trained on different rules, then design your own | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ArseniyCherednichenko/project-touchdown/blob/main/notebooks/stage2_change_the_points.ipynb) |
+
 ## How it learns
 
 The AI controls a lander with three engines: main, left and right. Every
@@ -55,25 +65,19 @@ tested on the original rules, 50 flights each.
 | No hints, only +100 / -100 at the end | -371 | 0% | 100% | 2.8 s |
 
 - **Free fuel:** still lands, but burns almost twice as much.
-- **Expensive fuel:** so scared of the engine that it barely brakes and
-  crashes every time.
+- **Expensive fuel:** so scared of firing its engine that it barely slows
+  down and crashes every time. A rocket has no brakes: the engine is the
+  only way to slow down.
 - **Crashing is free:** still lands. Crashing ends the flight before the
   +100 for landing, so it avoids crashing anyway.
 - **No hints:** never learns. Landing by pure luck is too rare to learn from.
   The small points along the way are what make learning possible.
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ArseniyCherednichenko/project-touchdown/blob/main/notebooks/stage2_change_the_points.ipynb)
-**Try it in the browser:** watch all five AIs, then design your own points.
-
 One training run per variant, so treat the exact numbers as rough. Run it
 yourself: `python train_variants.py free_fuel`, then
 `python train_variants.py compare`.
 
-## Try it yourself
-
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ArseniyCherednichenko/project-touchdown/blob/main/notebooks/stage1_land_a_rocket.ipynb)
-**No install needed:** train your own rocket AI in the browser with the
-stage 1 notebook. Free, runs on Google Colab.
+## Run it on your own computer
 
 Python 3.9 or newer.
 
